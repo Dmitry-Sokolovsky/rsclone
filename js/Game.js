@@ -18,15 +18,14 @@ class Game {
   }
 
   init(level) {
-    score.innerText = `SCORE: ${scoreGame}`;
-    document.getElementById('lives').innerHTML = `LIVES: ${lives}`;
-    document.getElementById('level').innerHTML = `Level ${level}`
-    console.log(lives);
-    if (language === 'en'){
+    if (language === 'en') {
       score.innerText = `SCORE: ${scoreGame}`;
+      document.getElementById('lives').innerHTML = `LIVES: ${lives}`;
+      document.getElementById('level').innerHTML = `LEVEL ${level}`;
     } else {
       score.innerText = `ОЧКОВ: ${scoreGame}`;
-
+      document.getElementById('lives').innerHTML = `ЖИЗНЕЙ: ${lives}`;
+      document.getElementById('level').innerHTML = `УРОВЕНЬ ${level}`;
     }
     this.modeGame = true;
     this.ball = new Ball({
@@ -34,7 +33,7 @@ class Game {
       y: canvas.height - 50,
       width: 10,
       height: 10,
-      speed: 250,
+      speed: 180,
       angle: Math.PI / 4 + Math.random() * Math.PI / 2,
     });
 
@@ -43,64 +42,62 @@ class Game {
       y: canvas.height - 30,
       width: 100,
       height: 15,
-      speed: 200,
+      speed: 280,
       rightKey: false,
       leftKey: false,
     });
 
-    // this.blocks = [];
-    // console.log(this.blocks);
-    if(lives === 1){
-      this.blocks = [];
-    }
-    if(this.blocks.length === 0){
-      if (level === 1){
-          for (let x = 0; x < 9; x += 1) {
-          for (let y = 0; y < 6; y += 1) {
-              this.blocks.push(new Block({
+    if (this.blocks.length === 0) {
+      if (level < 7) {
+        for (let x = 0; x < 12; x += 1) {
+          for (let y = 0; y < (5 + level); y += 1) {
+            this.blocks.push(new Block({
               x: 50 + 50 * x,
-              y: 50 + 20 * y,
+              y: 70 + 20 * y,
               width: 50,
               height: 20,
               color: getRandom(['yellow', 'red', 'green', 'pink']),
-              }));
+            }));
           }
-          }
-      } else if (level === 2){
-          for (let x = 0; x < 5; x += 1) {
-          for (let y = 0; y < 6; y += 1) {
-              this.blocks.push(new Block({
+        }
+      } else if (level === 7) {
+        for (let x = 0; x < 5; x += 1) {
+          for (let y = 0; y < 10; y += 1) {
+            this.blocks.push(new Block({
               x: 50 + 100 * x,
-              y: 50 + 20 * y,
+              y: 70 + 20 * y,
               width: 50,
               height: 20,
               color: getRandom(['yellow', 'red', 'green', 'pink']),
-              }));
+            }));
           }
-          }
-      } else if (level === 3){
-          for (let x = 0; x < 9; x += 1) {
-          for (let y = 0; y < 5; y += 1) {
-              this.blocks.push(new Block({
+        }
+      } else if (level === 8) {
+        for (let x = 0; x < 11; x += 1) {
+          for (let y = 0; y < 7; y += 1) {
+            this.blocks.push(new Block({
               x: 50 + 50 * x,
-              y: 50 + 40 * y,
+              y: 70 + 40 * y,
               width: 50,
               height: 20,
               color: getRandom(['yellow', 'red', 'green', 'pink']),
-              }));
+            }));
           }
-          }
+        }
       }
     }
-
-    // pause = true;
   }
 
   tick(timestamp) {
-    // console.log(pause);
-
-    if(pause){
+    if (pause) {
       return;
+    }
+    if ((sound.innerHTML === 'SOUND ON' || sound.innerHTML === 'ЗВУК ВКЛ') && audio.paused && audioMenu.paused) {
+      audio.play();
+    }
+    if (level === 9) {
+      this.modeGame = false;
+      drawResult();
     }
     requestAnimationFrame((x) => this.tick(x));
     if (this.modeGame) {
@@ -118,25 +115,22 @@ class Game {
       for (const block of this.blocks) {
         if (block.intersection(this.ball)) {
           changeItem(this.blocks, block);
-              // console.log(this.blocks.length);
 
-              
           scoreGame += 1;
-          if(language === 'en'){
+          if (language === 'en') {
             score.textContent = `SCORE: ${scoreGame}`;
           } else {
             score.textContent = `ОЧКОВ: ${scoreGame}`;
           }
-          if(this.blocks.length === 52 || this.blocks.length === 27){
+          if (this.blocks.length === 0) {
             this.modeGame = false;
-              drawResult();
-            // if(this.blocks.length === 0){
+            drawResult();
 
             level += 1;
             this.blocks = [];
-            if(language === 'en'){
+            if (language === 'en') {
               document.getElementById('level').innerHTML = `LEVEL ${level}`;
-            } else{
+            } else {
               document.getElementById('level').innerHTML = `УРОВЕНЬ ${level}`;
             }
             game.init(level);
@@ -144,26 +138,26 @@ class Game {
 
           const ctrl1 = new Rectangle({
             x: block.x,
-            y: block.y - 10,
+            y: block.y - 15,
             width: block.width,
-            height: 10,
+            height: 15,
           });
           const ctrl2 = new Rectangle({
             x: block.x - block.width,
             y: block.y,
-            width: 10,
+            width: 15,
             height: block.height,
           });
           const ctrl3 = new Rectangle({
             x: block.x,
             y: block.y + block.height,
             width: block.width,
-            height: 10,
+            height: 15,
           });
           const ctrl4 = new Rectangle({
-            x: block.x - 10,
+            x: block.x - 15,
             y: block.y,
-            width: 10,
+            width: 15,
             height: block.height,
           });
 

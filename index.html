@@ -6,7 +6,10 @@
     <title>Arcanoid</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="./assets/images/favicon.ico">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Londrina+Solid:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet">
 </head>
 <body class="body_hide"> 
     <audio src="./assets/audio/audio.mp3" id="audio"></audio>
@@ -27,10 +30,28 @@
                 <li id = 'sound'>SOUND ON</li>
                 <li>LANGUAGE EN</li>
                 <li>ABOUT</li>
+                <li>STATISTIC</li>
+            </ul>
+            <ul id="best-results" class="hidden">
+                <li>Score 1: 0</li>
+                <li>Score 2: 0</li>
+                <li>Score 3: 0</li>
+                <li>Score 4: 0</li>
+                <li>Score 5: 0</li>
+
+                <div class="battonContainer">
+                    <button class="back">Back</button>
+                </div>
             </ul>
             <ul id="help" class="hidden">
-                <li>Для начала игры нажмите Play.</li>
-                <li>Чтобы выйти в меню нажмите Menu.</li>
+                <li>To start the game, select the "PLAY" menu item.</li>
+                <li>To learn the game settings, select the "HELP" menu item.</li>
+                <li>To exit the menu, press the "Escape" key on the keyboard, or the "Menu" button on the screen.</li>
+                <li>To save the game, press the " s "key on the keyboard, or the "Save" button on the screen.</li>
+                <li>To download the game, press the " l "key on the keyboard, or the "Download" button on the screen.</li>
+                <li>Для начала новой игры нажмите "n" на клавиатуре, либо кнопку "Новая игра" на экране.</li>
+                <li>To stop or resume the game, press " p " on the keyboard. </li>
+
                 <div class="battonContainer">
                     <button class="back">Back</button>
                 </div>
@@ -47,16 +68,14 @@
                     <button class="back">Back</button>
                 </div>
             </div>
-            <!-- <ul id="setting" class="hidden">
-                <div class="battonContainer">
-                    <button class="back">Back</button>
-                </div>
-            </ul> -->
         </div>
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" width="700" height="600"></canvas>
         <div>
-            <button id="backMenu">MENU</button>
-            <button id="newGame">New game</button>
+            <button id="backMenu" class = "menu-button">Menu</button>
+            <button id="new-game" class = "menu-button">New game</button>
+            <button id="save-game" class = "menu-button">Save</button>
+            <button id="load-game" class = "menu-button">Load</button>
+
         </div>
 
     </div>
