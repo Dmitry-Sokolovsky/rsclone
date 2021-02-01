@@ -110,10 +110,10 @@ document.getElementById('backMenu').onclick = function(){
 
 
 const image = new Image();
-image.src = 'sprite1.png';
+image.src = './assets/images/sprite1.png';
 
 const space = new Image();
-space.src = 'space.jpg';
+space.src = './assets/images/space.jpg';
 
 const maps = {
   ball: {

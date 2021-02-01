@@ -30,7 +30,7 @@ class Game {
       y: canvas.height - 50,
       width: 10,
       height: 10,
-      speed: 300,
+      speed: 250,
       angle: Math.PI / 4 + Math.random() * Math.PI / 2,
     });
 
