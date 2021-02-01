@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+   }
+#canvas{
+    display: block;
+    margin: 0 auto;
+}
+#conteiner{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#result{
+    display: flex;
+    justify-content: center;
+}
