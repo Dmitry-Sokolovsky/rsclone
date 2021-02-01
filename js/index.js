@@ -1,14 +1,60 @@
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
+let game;
+
+function gameInit(){
+    document.getElementById('popup').classList.add('popup__overlay');
+}
 
 
 function soundClick() {
-  var audio = new Audio();
-  audio.src = 'audio1.mp3';
-  audio.autoplay = true;
-  // console.log('tut');
+    let audio = new Audio();
+    audio.src = 'audio.mp3';
+    audio.play();
+  }
+  // soundClick();
+
+gameInit();
+    const menu = document.getElementById('menu');
+    menu.onclick = function(event) {
+    let target = event.target;
+    let popup = document.getElementById('popup');
+    console.log(target.innerText);
+    if (target.innerText === 'Play' || target.innerText === 'Играть'){
+        game = new Game();
+        soundClick();
+
+        popup.classList.remove('popup__overlay');
+        menu.classList.add('hidden');
+    } else if(target.innerText === 'Help' || target.innerText === 'Помощь'){
+        menu.classList.add('hidden');
+        document.getElementById('help').classList.remove('hidden');
+   } else if(target.innerText === 'Setting' || target.innerText === 'Настройки'){
+    menu.classList.add('hidden');
+    document.getElementById('setting').classList.remove('hidden');
+    } else if(target.innerText === 'Language EN'){
+        menu.innerHTML = `<li>Играть</li> <li>Помощь</li> <li>Настройки</li> <li>О игре</li> <li>Язык RU</li>`
+    } else if(target.innerText === 'Язык RU'){
+        menu.innerHTML = `<li>Play</li> <li>Help</li> <li>Setting</li> <li>About</li> <li>Language EN</li>`
+    }
+
+};
+document.getElementById('back').onclick = function(){
+    menu.classList.remove('hidden');
+    document.getElementById('help').classList.add('hidden');
 }
-// soundClick();
+document.getElementById('backSetting').onclick = function(){
+    menu.classList.remove('hidden');
+    document.getElementById('setting').classList.add('hidden');
+}
+document.getElementById('backMenu').onclick = function(){
+    console.log('tut');
+
+    audio.pause();
+    document.getElementById('popup').classList.add('popup__overlay');
+    menu.classList.remove('hidden');
+}
+
 
 const image = new Image();
 image.src = 'sprite1.png';
@@ -60,10 +106,10 @@ const maps = {
   },
 };
 
-canvas.width = 500;
+canvas.width = 550;
 canvas.height = 500;
 
-const game = new Game();
+// const game = new Game();
 
 const borders = [
   new Rectangle({
@@ -108,7 +154,10 @@ document.addEventListener('keyup', (event) => {
   } else if (event.key === 'ArrowRight') {
     game.platform.rightKey = false;
   } else if (game.modeGame === false && event.key === 'Enter') {
-    game.init();
+    scoreGame = 0;
+    level = 1;
+    document.getElementById('level').innerHTML = `Level ${level}`
+    game.init(level);
   }
 });
 
@@ -125,10 +174,10 @@ function drawResult() {
   context.fillStyle = 'black';
   context.font = '50px Monaco';
   context.textAlign = 'center';
-  context.fillText('Close game', canvas.width / 2, canvas.height / 2 - 50);
+  context.fillText('Game over', canvas.width / 2, canvas.height / 2 - 50);
 
   context.fillStyle = 'black';
   context.font = '20px Monaco';
   context.textAlign = 'center';
-  context.fillText('Для продолжения нажми Enter', canvas.width / 2, canvas.height / 2 - 30);
+  context.fillText('Для продолжения нажми Enter', canvas.width / 2, canvas.height / 2);
 }

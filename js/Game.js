@@ -1,6 +1,6 @@
-let counter = 0;
+let scoreGame = 0;
 const score = document.getElementById('result');
-
+let level = 1;
 
 class Game {
   constructor(parameter) {
@@ -10,14 +10,13 @@ class Game {
     this.modeGame = false;
     this.paramTimestamp = 0;
 
-    this.init();
+    this.init(level);
 
     requestAnimationFrame((x) => this.tick(x));
   }
 
-  init() {
-    counter = 0;
-    score.innerText = `SCORE: ${counter}`;
+  init(level) {
+    score.innerText = `SCORE: ${scoreGame}`;
     this.modeGame = true;
     this.ball = new Ball({
       x: canvas.width / 2,
@@ -40,15 +39,42 @@ class Game {
 
     this.blocks = [];
 
-    for (let x = 0; x < 8; x += 1) {
-      for (let y = 0; y < 6; y += 1) {
-        this.blocks.push(new Block({
-          x: 50 + 50 * x,
-          y: 50 + 20 * y,
-          width: 50,
-          height: 20,
-          color: getRandom(['yellow', 'red', 'green', 'pink']),
-        }));
+    console.log(level);
+    if (level === 1) {
+      for (let x = 0; x < 9; x += 1) {
+        for (let y = 0; y < 6; y += 1) {
+          this.blocks.push(new Block({
+            x: 50 + 50 * x,
+            y: 50 + 20 * y,
+            width: 50,
+            height: 20,
+            color: getRandom(['yellow', 'red', 'green', 'pink']),
+          }));
+        }
+      }
+    } else if (level === 2) {
+      for (let x = 0; x < 5; x += 1) {
+        for (let y = 0; y < 6; y += 1) {
+          this.blocks.push(new Block({
+            x: 50 + 100 * x,
+            y: 50 + 20 * y,
+            width: 50,
+            height: 20,
+            color: getRandom(['yellow', 'red', 'green', 'pink']),
+          }));
+        }
+      }
+    } else if (level === 3) {
+      for (let x = 0; x < 9; x += 1) {
+        for (let y = 0; y < 5; y += 1) {
+          this.blocks.push(new Block({
+            x: 50 + 50 * x,
+            y: 50 + 40 * y,
+            width: 50,
+            height: 20,
+            color: getRandom(['yellow', 'red', 'green', 'pink']),
+          }));
+        }
       }
     }
   }
@@ -73,16 +99,19 @@ class Game {
       for (const block of this.blocks) {
         if (block.intersection(this.ball)) {
           changeItem(this.blocks, block);
-        //   console.log(this.blocks.length);
-          counter += 1;
-        //   console.log(counter);
+          console.log(this.blocks.length);
+          scoreGame += 1;
+          //   console.log(scoreGame);
 
-          score.textContent = `SCORE: ${counter}`;
-          // if(this.blocks.length === 46){
-          //     console.log('tut');
-          //     this.modeGame = false;
-          //     drawResult();
-          // }
+          score.textContent = `SCORE: ${scoreGame}`;
+          if (this.blocks.length === 51 || this.blocks.length === 27) {
+            console.log(this.blocks.length);
+            //   this.modeGame = false;
+            //   drawResult();
+            level += 1;
+            document.getElementById('level').innerHTML = `Level ${level}`;
+            game.init(level);
+          }
 
           const ctrl1 = new Rectangle({
             x: block.x,
