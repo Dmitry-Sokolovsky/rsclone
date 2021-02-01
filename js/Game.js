@@ -2,7 +2,7 @@ let scoreGame = 0;
 const score = document.getElementById('result');
 let level = 1;
 this.blocks = [];
-
+let pause = false;
 
 class Game {
   constructor(parameter) {
@@ -18,6 +18,10 @@ class Game {
   }
 
   init(level) {
+    score.innerText = `SCORE: ${scoreGame}`;
+    document.getElementById('lives').innerHTML = `LIVES: ${lives}`;
+    document.getElementById('level').innerHTML = `Level ${level}`
+    console.log(lives);
     if (language === 'en'){
       score.innerText = `SCORE: ${scoreGame}`;
     } else {
@@ -45,7 +49,7 @@ class Game {
     });
 
     // this.blocks = [];
-    console.log(this.blocks);
+    // console.log(this.blocks);
     if(lives === 1){
       this.blocks = [];
     }
@@ -89,19 +93,22 @@ class Game {
       }
     }
 
-
+    // pause = true;
   }
 
   tick(timestamp) {
+    // console.log(pause);
+
+    if(pause){
+      return;
+    }
     requestAnimationFrame((x) => this.tick(x));
     if (this.modeGame) {
       const dTimestamp = Math.min(16.7, timestamp - this.paramTimestamp);
       const secondPart = dTimestamp / 1000;
       this.paramTimestamp = timestamp;
-
       this.ball.x += secondPart * this.ball.speed * Math.cos(this.ball.angle);
       this.ball.y -= secondPart * this.ball.speed * Math.sin(this.ball.angle);
-
       if (this.platform.leftKey) {
         this.platform.x = Math.max(0, this.platform.x - secondPart * this.platform.speed);
       } else if (this.platform.rightKey) {
@@ -111,18 +118,19 @@ class Game {
       for (const block of this.blocks) {
         if (block.intersection(this.ball)) {
           changeItem(this.blocks, block);
-              console.log(this.blocks.length);
+              // console.log(this.blocks.length);
 
+              
           scoreGame += 1;
           if(language === 'en'){
             score.textContent = `SCORE: ${scoreGame}`;
           } else {
             score.textContent = `ОЧКОВ: ${scoreGame}`;
           }
-          // if(this.blocks.length === 52 || this.blocks.length === 27){
-            // this.modeGame = false;
-            //   drawResult();
-            if(this.blocks.length === 0){
+          if(this.blocks.length === 52 || this.blocks.length === 27){
+            this.modeGame = false;
+              drawResult();
+            // if(this.blocks.length === 0){
 
             level += 1;
             this.blocks = [];

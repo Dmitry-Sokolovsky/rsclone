@@ -22,8 +22,11 @@ gameInit();
     let target = event.target;
     let popup = document.getElementById('popup');
     if (target.innerText === 'PLAY' || target.innerText === 'ИГРАТЬ'){
+        // pause = false;
+        
+        // requestAnimationFrame((x) => game.tick(x));
         audioMenu.pause();
-        console.log(game);
+        // console.log(game);
         if(game === undefined){
             game = new Game();
         }
@@ -99,6 +102,7 @@ document.getElementById('popup').onclick = function(event) {
 }
 
 document.getElementById('backMenu').onclick = function(){
+    pause = true;
     audio.pause();
     if(sound.innerHTML === 'SOUND ON' || sound.innerHTML === 'ЗВУК ВКЛ'){
         audioMenu.play();
@@ -107,7 +111,6 @@ document.getElementById('backMenu').onclick = function(){
     document.getElementById('popup').classList.add('popup__overlay');
     menu.classList.remove('hidden');
 }
-
 
 const image = new Image();
 image.src = './assets/images/sprite1.png';
@@ -193,6 +196,17 @@ function changeItem(array, item) {
   }
 }
 
+
+function inintNewGame(){
+  scoreGame = 0;
+  level = 1;
+  lives = 3;
+  game.blocks = [];
+  score.innerText = `SCORE: ${scoreGame}`;
+  document.getElementById('lives').innerHTML = `LIVES: ${lives}`;
+  document.getElementById('level').innerHTML = `Level ${level}`;
+  game.init(level);
+}
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowLeft') {
     game.platform.leftKey = true;
@@ -202,28 +216,43 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('keyup', (event) => {
+  // console.log(event.key);
   if (event.key === 'ArrowLeft') {
     game.platform.leftKey = false;
   } else if (event.key === 'ArrowRight') {
     game.platform.rightKey = false;
   } else if (game.modeGame === false && event.key === 'Enter') {
-
       if(lives === 1){
-        game.init(level);
-        scoreGame = 0;
-        level = 1;
-        lives = 3;
-        score.innerText = `SCORE: ${scoreGame}`;
-        document.getElementById('lives').innerHTML = `LIVES: ${lives}`;
-        document.getElementById('level').innerHTML = `Level ${level}`
+        console.log("tut");
+
+        inintNewGame();
       } else {
-          game.init(level);
+          // game.init(level);
+          console.log("tut1111");
+
           lives -= 1;
           document.getElementById('lives').innerHTML = `LIVES: ${lives}`;
+          game.init(level);
       }
     
   }
+  else if (event.key === 'p' || event.key === 'з' || event.key === 'P' || event.key === 'З') {
+    if(pause){
+      pause = false;
+      requestAnimationFrame((x) => game.tick(x));
+    } else{
+      pause = true;
+    }
+  }
+  // else if (event.key === 'q') {
+  //   pause = false;
+  //   requestAnimationFrame((x) => game.tick(x));
+  // }
 });
+document.getElementById('newGame').onclick = function(){
+  inintNewGame();
+}
+
 
 function getRandom(array) {
   const index = Math.floor(Math.random() * array.length);
