@@ -6,32 +6,50 @@
     <title>Arcanoid</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="body_hide"> 
     <audio src="audio.mp3" id="audio"></audio>
+    <audio src="audio1.mp3" id="audioMenu"></audio>
+
     <div id = "conteiner">
         <div id = "gameStaus">
             <ul id="gameInfo">
                 <li id = "result">SCORE: 0</li>
                 <li id="level">LEVEL: 1</li>
+                <li id="lives">LIVES: 3</li>
             </ul>
         </div>
         <div id="popup">
             <ul id="menu">
-                <li>Play</li>
-                <li>Help</li>
-                <li>Setting</li>
-                <li>About</li>
-                <li>Language EN</li>
+                <li>PLAY</li>
+                <li>HELP</li>
+                <li id = 'sound'>SOUND ON</li>
+                <li>LANGUAGE EN</li>
+                <li>ABOUT</li>
             </ul>
             <ul id="help" class="hidden">
                 <li>Для начала игры нажмите Play.</li>
                 <li>Чтобы выйти в меню нажмите Menu.</li>
-                <button id="back">Back</button>
+                <div class="battonContainer">
+                    <button class="back">Back</button>
+                </div>
             </ul>
-            <ul id="setting" class="hidden">
-
-                <button id="backSetting">Back</button>
-            </ul>
+            <div id="about" class="hidden">
+                <div>
+                    Arkanoid is an arcade game developed by Taito in 1986. Arkanoid is an update 
+                    of the early ball and paddle video games — and specifically of Atari's 1978 classic, 
+                    Super Breakout — in which the player takes control of a paddle at the bottom of the 
+                    screen and must use it to deflect a ball into rows of bricks at the top of the screen, 
+                    thus destroying them and, eventually, clearing the screen to progress to the next level.
+                </div>
+                <div class="battonContainer">
+                    <button class="back">Back</button>
+                </div>
+            </div>
+            <!-- <ul id="setting" class="hidden">
+                <div class="battonContainer">
+                    <button class="back">Back</button>
+                </div>
+            </ul> -->
         </div>
         <canvas id="canvas"></canvas>
         <button id="backMenu">MENU</button>

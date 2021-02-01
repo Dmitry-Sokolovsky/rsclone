@@ -1,6 +1,8 @@
 let scoreGame = 0;
 const score = document.getElementById('result');
 let level = 1;
+this.blocks = [];
+
 
 class Game {
   constructor(parameter) {
@@ -16,7 +18,12 @@ class Game {
   }
 
   init(level) {
-    score.innerText = `SCORE: ${scoreGame}`;
+    if (language === 'en'){
+      score.innerText = `SCORE: ${scoreGame}`;
+    } else {
+      score.innerText = `ОЧКОВ: ${scoreGame}`;
+
+    }
     this.modeGame = true;
     this.ball = new Ball({
       x: canvas.width / 2,
@@ -37,51 +44,56 @@ class Game {
       leftKey: false,
     });
 
-    this.blocks = [];
-
-    console.log(level);
-    if (level === 1) {
-      for (let x = 0; x < 9; x += 1) {
-        for (let y = 0; y < 6; y += 1) {
-          this.blocks.push(new Block({
-            x: 50 + 50 * x,
-            y: 50 + 20 * y,
-            width: 50,
-            height: 20,
-            color: getRandom(['yellow', 'red', 'green', 'pink']),
-          }));
-        }
-      }
-    } else if (level === 2) {
-      for (let x = 0; x < 5; x += 1) {
-        for (let y = 0; y < 6; y += 1) {
-          this.blocks.push(new Block({
-            x: 50 + 100 * x,
-            y: 50 + 20 * y,
-            width: 50,
-            height: 20,
-            color: getRandom(['yellow', 'red', 'green', 'pink']),
-          }));
-        }
-      }
-    } else if (level === 3) {
-      for (let x = 0; x < 9; x += 1) {
-        for (let y = 0; y < 5; y += 1) {
-          this.blocks.push(new Block({
-            x: 50 + 50 * x,
-            y: 50 + 40 * y,
-            width: 50,
-            height: 20,
-            color: getRandom(['yellow', 'red', 'green', 'pink']),
-          }));
-        }
+    // this.blocks = [];
+    console.log(this.blocks);
+    if(lives === 1){
+      this.blocks = [];
+    }
+    if(this.blocks.length === 0){
+      if (level === 1){
+          for (let x = 0; x < 9; x += 1) {
+          for (let y = 0; y < 6; y += 1) {
+              this.blocks.push(new Block({
+              x: 50 + 50 * x,
+              y: 50 + 20 * y,
+              width: 50,
+              height: 20,
+              color: getRandom(['yellow', 'red', 'green', 'pink']),
+              }));
+          }
+          }
+      } else if (level === 2){
+          for (let x = 0; x < 5; x += 1) {
+          for (let y = 0; y < 6; y += 1) {
+              this.blocks.push(new Block({
+              x: 50 + 100 * x,
+              y: 50 + 20 * y,
+              width: 50,
+              height: 20,
+              color: getRandom(['yellow', 'red', 'green', 'pink']),
+              }));
+          }
+          }
+      } else if (level === 3){
+          for (let x = 0; x < 9; x += 1) {
+          for (let y = 0; y < 5; y += 1) {
+              this.blocks.push(new Block({
+              x: 50 + 50 * x,
+              y: 50 + 40 * y,
+              width: 50,
+              height: 20,
+              color: getRandom(['yellow', 'red', 'green', 'pink']),
+              }));
+          }
+          }
       }
     }
+
+
   }
 
   tick(timestamp) {
     requestAnimationFrame((x) => this.tick(x));
-
     if (this.modeGame) {
       const dTimestamp = Math.min(16.7, timestamp - this.paramTimestamp);
       const secondPart = dTimestamp / 1000;
@@ -99,17 +111,26 @@ class Game {
       for (const block of this.blocks) {
         if (block.intersection(this.ball)) {
           changeItem(this.blocks, block);
-          console.log(this.blocks.length);
-          scoreGame += 1;
-          //   console.log(scoreGame);
+              console.log(this.blocks.length);
 
-          score.textContent = `SCORE: ${scoreGame}`;
-          if (this.blocks.length === 51 || this.blocks.length === 27) {
-            console.log(this.blocks.length);
-            //   this.modeGame = false;
+          scoreGame += 1;
+          if(language === 'en'){
+            score.textContent = `SCORE: ${scoreGame}`;
+          } else {
+            score.textContent = `ОЧКОВ: ${scoreGame}`;
+          }
+          // if(this.blocks.length === 52 || this.blocks.length === 27){
+            // this.modeGame = false;
             //   drawResult();
+            if(this.blocks.length === 0){
+
             level += 1;
-            document.getElementById('level').innerHTML = `Level ${level}`;
+            this.blocks = [];
+            if(language === 'en'){
+              document.getElementById('level').innerHTML = `LEVEL ${level}`;
+            } else{
+              document.getElementById('level').innerHTML = `УРОВЕНЬ ${level}`;
+            }
             game.init(level);
           }
 

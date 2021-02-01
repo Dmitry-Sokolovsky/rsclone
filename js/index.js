@@ -1,56 +1,109 @@
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 let game;
+let language = 'en';
+let lives = 3;
+const audioMenu = document.getElementById('audioMenu');
+const audio = document.getElementById('audio');
+const sound = document.getElementById('sound');
+audioMenu.play();
+
+setTimeout(function(){
+	document.body.classList.add('body_visible');
+}, 200);
 
 function gameInit(){
     document.getElementById('popup').classList.add('popup__overlay');
 }
-
-
-function soundClick() {
-    let audio = new Audio();
-    audio.src = 'audio.mp3';
-    audio.play();
-  }
-  // soundClick();
 
 gameInit();
     const menu = document.getElementById('menu');
     menu.onclick = function(event) {
     let target = event.target;
     let popup = document.getElementById('popup');
-    console.log(target.innerText);
-    if (target.innerText === 'Play' || target.innerText === 'Играть'){
-        game = new Game();
-        soundClick();
+    if (target.innerText === 'PLAY' || target.innerText === 'ИГРАТЬ'){
+        audioMenu.pause();
+        console.log(game);
+        if(game === undefined){
+            game = new Game();
+        }
+        if(sound.innerHTML === 'SOUND ON' || sound.innerHTML === 'ЗВУК ВКЛ'){
+            audio.play();
+        } 
 
-        popup.classList.remove('popup__overlay');
-        menu.classList.add('hidden');
-    } else if(target.innerText === 'Help' || target.innerText === 'Помощь'){
+        // setTimeout(function(){
+            popup.classList.remove('popup__overlay');
+            menu.classList.add('hidden');
+
+        // }, 200);
+
+        // popup.classList.remove('popup__overlay');
+        // menu.classList.add('hidden');
+    } else if(target.innerText === 'HELP' || target.innerText === 'ПОМОЩЬ'){
         menu.classList.add('hidden');
         document.getElementById('help').classList.remove('hidden');
-   } else if(target.innerText === 'Setting' || target.innerText === 'Настройки'){
-    menu.classList.add('hidden');
-    document.getElementById('setting').classList.remove('hidden');
-    } else if(target.innerText === 'Language EN'){
-        menu.innerHTML = `<li>Играть</li> <li>Помощь</li> <li>Настройки</li> <li>О игре</li> <li>Язык RU</li>`
-    } else if(target.innerText === 'Язык RU'){
-        menu.innerHTML = `<li>Play</li> <li>Help</li> <li>Setting</li> <li>About</li> <li>Language EN</li>`
+    
+    } else if(target.innerText === 'ABOUT' || target.innerText === 'ОБ ИГРЕ'){
+        menu.classList.add('hidden');
+        document.getElementById('about').classList.remove('hidden');
+    } else if(target.innerText === 'LANGUAGE EN'){
+        language = 'ru';
+        document.getElementById('result').innerHTML = 'ОЧКОВ: 0';
+        document.getElementById('level').innerHTML = 'УРОВЕНЬ: 0';
+        document.getElementById('backMenu').innerHTML = 'МЕНЮ';
+        document.getElementById('about').innerHTML = `Arkanoid - аркадная игра, разработанная Taito в 1986 году.
+        Arkanoid - это обновление ранних видеоигр с мячом и ракеткой, в частности классической игры Atari 1978 года 
+        Super Breakout, в которой игрок берет на себя управление ракеткой в ​​нижней части экрана и должен использовать ее, 
+        чтобы разбивать мяч по рядам кирпичей в верхней части экрана, таким образом уничтожая их и, в конечном итоге, 
+        очищая экран, чтобы перейти на следующий уровень.  <div class="battonContainer"> <button class="back">Назад</button></div>` ;
+        menu.innerHTML = `<li>ИГРАТЬ</li> <li>ПОМОЩЬ</li> <li>ЗВУК ВКЛ</li> <li>ЯЗЫК RU</li> <li>ОБ ИГРЕ</li>`;
+    } else if(target.innerText === 'ЯЗЫК RU'){
+        language = 'en';
+        document.getElementById('result').innerHTML = 'SCORE: 0';
+        document.getElementById('level').innerHTML = 'LEVEL: 0';
+        document.getElementById('backMenu').innerHTML = 'MENU';
+        document.getElementById('about').innerHTML = `Arkanoid is an arcade game developed by Taito in 1986. Arkanoid is an update 
+                    of the early ball and paddle video games — and specifically of Atari's 1978 classic, 
+                    Super Breakout — in which the player takes control of a paddle at the bottom of the 
+                    screen and must use it to deflect a ball into rows of bricks at the top of the screen, 
+                    thus destroying them and, eventually, clearing the screen to progress to the next level. 
+                    <div class="battonContainer"> <button class="back">Back</button></div>`
+        menu.innerHTML = `<li>PLAY</li> <li>HELP</li> <li>SOUND ON</li><li>LANGUAGE EN</li> <li>ABOUT</li>`;
+    } else if(target.innerHTML === 'SOUND ON' || target.innerHTML === 'ЗВУК ВКЛ'){
+        if(language === 'en'){
+            target.innerHTML = 'SOUND OFF';
+        } else {
+            target.innerHTML = 'ЗВУК ВЫКЛ';
+        }
+        audioMenu.pause();
+        // audio.pause();
+    } else if(target.innerHTML === 'SOUND OFF' || target.innerHTML === 'ЗВУК ВЫКЛ'){
+        if(language === 'en'){
+            target.innerHTML = 'SOUND ON';
+        } else {
+            target.innerHTML = 'ЗВУК ВКЛ';
+        }
+        audioMenu.play();
+        // audio.play();
+    }
+};
+
+document.getElementById('popup').onclick = function(event) {
+    let target = event.target;
+    if(target.innerHTML === 'Back' || target.innerHTML === 'Назад'){
+        menu.classList.remove('hidden');
+        document.getElementById('help').classList.add('hidden');
+        document.getElementById('about').classList.add('hidden');
+        // document.getElementById('setting').classList.add('hidden');
+    }
+}
+
+document.getElementById('backMenu').onclick = function(){
+    audio.pause();
+    if(sound.innerHTML === 'SOUND ON' || sound.innerHTML === 'ЗВУК ВКЛ'){
+        audioMenu.play();
     }
 
-};
-document.getElementById('back').onclick = function(){
-    menu.classList.remove('hidden');
-    document.getElementById('help').classList.add('hidden');
-}
-document.getElementById('backSetting').onclick = function(){
-    menu.classList.remove('hidden');
-    document.getElementById('setting').classList.add('hidden');
-}
-document.getElementById('backMenu').onclick = function(){
-    console.log('tut');
-
-    audio.pause();
     document.getElementById('popup').classList.add('popup__overlay');
     menu.classList.remove('hidden');
 }
@@ -154,10 +207,21 @@ document.addEventListener('keyup', (event) => {
   } else if (event.key === 'ArrowRight') {
     game.platform.rightKey = false;
   } else if (game.modeGame === false && event.key === 'Enter') {
-    scoreGame = 0;
-    level = 1;
-    document.getElementById('level').innerHTML = `Level ${level}`
-    game.init(level);
+
+      if(lives === 1){
+        game.init(level);
+        scoreGame = 0;
+        level = 1;
+        lives = 3;
+        score.innerText = `SCORE: ${scoreGame}`;
+        document.getElementById('lives').innerHTML = `LIVES: ${lives}`;
+        document.getElementById('level').innerHTML = `Level ${level}`
+      } else {
+          game.init(level);
+          lives -= 1;
+          document.getElementById('lives').innerHTML = `LIVES: ${lives}`;
+      }
+    
   }
 });
 
@@ -166,18 +230,45 @@ function getRandom(array) {
   return array[index];
 }
 function drawResult() {
+
   context.beginPath();
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = 'rgba(255, 255, 255, 0.5';
   context.fill();
 
   context.fillStyle = 'black';
-  context.font = '50px Monaco';
   context.textAlign = 'center';
-  context.fillText('Game over', canvas.width / 2, canvas.height / 2 - 50);
+  if(lives === 1){
+      if(language === 'ru'){
+        context.font = '2rem Monaco';
+        context.fillText(`Конец игры`, canvas.width / 2, canvas.height / 2 - 50);
+        context.font = '1.5rem Monaco';
+        context.fillText(`Ваш результат: ${scoreGame}`, canvas.width / 2, canvas.height / 2);
+        context.fillText('Для начала новой игры нажмите Enter', canvas.width / 2, canvas.height / 2 + 50);
+      } else{
+        context.font = '2rem Monaco';
+        context.fillText(`Game over`, canvas.width / 2, canvas.height / 2 - 50);
+        context.font = '1.5rem Monaco';
+        context.fillText(`Your result: ${scoreGame}`, canvas.width / 2, canvas.height / 2);
+        context.fillText('To start a new game, click Enter', canvas.width / 2, canvas.height / 2 + 50);
+      }
+  } else {
+    if(language === 'ru'){
+        context.font = '2rem Monaco';
+        context.fillText('Для продолжения нажмите Enter', canvas.width / 2, canvas.height / 2 - 50);
+        context.font = '1.5rem Monaco';
+        context.fillText(`У вас осталось ${lives - 1} жизней`, canvas.width / 2, canvas.height / 2);
+    } else{
+        context.font = '2rem Monaco';
+        context.fillText('To continue, click Enter', canvas.width / 2, canvas.height / 2 - 50);
+        context.font = '1.5rem Monaco';
+        context.fillText(`You have ${lives - 1} lives left`, canvas.width / 2, canvas.height / 2);
 
-  context.fillStyle = 'black';
-  context.font = '20px Monaco';
-  context.textAlign = 'center';
-  context.fillText('Для продолжения нажми Enter', canvas.width / 2, canvas.height / 2);
+    }
+  }
+
+//   context.fillStyle = 'black';
+//   context.font = '20px Monaco';
+//   context.textAlign = 'center';
+//   context.fillText('Для продолжения нажмите Enter', canvas.width / 2, canvas.height / 2);
 }
