@@ -49,7 +49,7 @@ class Game {
 
     if (this.blocks.length === 0) {
       if (level < 7) {
-        for (let x = 0; x < 12; x += 1) {
+        for (let x = 0; x < 11; x += 1) {
           for (let y = 0; y < (5 + level); y += 1) {
             this.blocks.push(new Block({
               x: 50 + 50 * x,
@@ -102,7 +102,7 @@ class Game {
     requestAnimationFrame((x) => this.tick(x));
     if (this.modeGame) {
       const dTimestamp = Math.min(16.7, timestamp - this.paramTimestamp);
-      const secondPart = dTimestamp / 1000;
+      const secondPart = dTimestamp / 900;
       this.paramTimestamp = timestamp;
       this.ball.x += secondPart * this.ball.speed * Math.cos(this.ball.angle);
       this.ball.y -= secondPart * this.ball.speed * Math.sin(this.ball.angle);
