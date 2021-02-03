@@ -147,6 +147,12 @@
   #footer a:hover{
     color:rgb(255, 0, 43);
   }
+@media screen and (max-width: 1200px) {
+    canvas {
+       width: 650px;
+       height: 500px;
+    }
+}
 @media screen and (max-width: 750px) {
  canvas {
     width: 500px;
