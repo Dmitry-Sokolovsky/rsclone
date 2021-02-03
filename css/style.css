@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+   }
+.hidden{
+    display: none;
+}
+.body_hide {
+	opacity: 0;
+	transition: .9s opacity ease-in-out;
+}
+.body_visible {
+	opacity: 1;
+}
+
+#canvas{
+    display: block;
+    margin: 0 auto;
+}
+#conteiner{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url('../assets/images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+#gameStaus{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#popup{
+	transition: .9s opacity ease-in-out;
+}
+.popup__overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/images/background.jpg') no-repeat center center fixed;
+    /* background-size: 100% auto; */
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	opacity: 1;
+}
+
+#menu{
+    text-align: center;
+    color: #fff;
+}
+#menu li{
+    list-style: none;
+    font-size: 3rem;
+    padding: 1rem 0;
+    font-family: 'Shrikhand', cursive;
+}
+#menu li:hover{
+    cursor: pointer;
+    color: rgb(195, 233, 29);
+}
+#gameInfo{
+    display: flex;
+}
+#gameInfo li{
+    color: #fff;
+    padding: 0 1rem;
+    list-style: none;
+    font-size: 1.3rem;
+    font-family: 'Courgette', cursive;
+}
+.menu-button,
+.back{
+    margin-top: 0.3rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    border: 2px solid #80f089;
+    box-sizing: border-box;
+    border-radius: 6.25rem;
+    font-family: Georgia;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    background: #80f089;
+    cursor: default;
+    outline: none;
+    font-family: 'Pacifico', Verdana, cursive;
+}
+.menu-button:hover,
+.back:hover{
+    cursor:pointer;
+    background: #1a202c;
+    border: 2px solid #1a202c;
+    color:#fff;
+}
+#help li{
+    color: #fff;
+    padding: 0 1rem;
+    list-style:decimal;
+    font-size: 1.3rem;
+}
+.back{
+    display: flex;
+    justify-content: center;
+}
+.battonContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#about{
+    width: 60vh;
+    color: #fff;
+    font-size: 1.3rem;
+    text-align: justify;
+    text-indent: 20px; 
+}
+#help{
+    width: 50%;
+}
+#best-results li{
+    color: #fff;
+    list-style: none;
+    font-size: 2rem;
+    padding: 1rem 0;
+    font-family: 'Shrikhand', cursive;
+}
+#footer {
+    /* background-color: rgb(36, 21, 21); */
+    display: flex;
+    align-items: center;
+    /* padding: 10px 0 0 0; */
+    /* justify-content: space-between; */
+    /* position: fixed;
+    bottom: 0; */
+  }
+  #footer span{
+      padding: 0 3rem;
+  }
+   #footer a{
+    text-decoration:none;
+    color: rgb(83, 245, 83);
+  }
+  #footer a:hover{
+    color:rgb(255, 0, 43);
+  }
+@media screen and (max-width: 1200px) {
+    canvas {
+       width: 650px;
+       height: 500px;
+    }
+}
+@media screen and (max-width: 750px) {
+ canvas {
+    width: 500px;
+    height: 450px;
+ }
+ .menu-button, .back {
+    font-size: 1rem;
+}
+#gameInfo li {
+    font-size: 1rem;
+}
+}
+@media screen and (max-width: 550px) {
+    canvas {
+       width: 300px;
+       height: 250px;
+    }
+    .menu-button, .back {
+       font-size: 1rem;
+   }
+   #gameInfo li {
+       font-size: 1rem;
+   }
+   }
+@media screen and (max-width: 350px) {
+    canvas {
+       width: 200px;
+       height: 150px;
+    }
+    .menu-button, .back {
+       font-size: 0.7rem;
+        padding: 0;
+        letter-spacing: 0;
+    }
+   #gameInfo li {
+       font-size: 0.7rem;
+       padding: 0 0.3rem;
+   }
+}
+@media screen and (max-width: 200px) {
+    canvas {
+       width: 100px;
+       height: 80px;
+    }
+    .menu-button, .back {
+       font-size: 0.3rem;
+       height: 1rem;
+        padding: 0;
+        letter-spacing: 0;
+    }
+   #gameInfo li {
+       font-size: 0.3rem;
+       padding: 0 0.3rem;
+   }
+}
